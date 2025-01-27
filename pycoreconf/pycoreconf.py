@@ -41,10 +41,12 @@ class CORECONFModel(ModelSID):
 
     def __init__(self, 
                  *sid_files, 
-                 model_description_file=None):
+                 model_description_file=None, debug=False):
         self.model_description_file = model_description_file
         self.yang_ietf_modules_paths = ["."]
+        self.debug = debug
         ModelSID.__init__(self, *sid_files)
+
 
     def add_modules_path(self, path):
         """
@@ -98,7 +100,9 @@ class CORECONFModel(ModelSID):
                 # print("[-]", dtype, ": Returning as is." )
                 return obj
             else:
-                print("[X] Unrecognized obj type:", dtype, ". Returning as is.")
+                if self.debug:
+                    print("[X] Unrecognized obj type:", dtype, ". Returning as is.")
+
         elif type(dtype) is dict: # enumeration ({"value":"name"})
             if encoding: # inverse dict, w value as int
                 dtype = {v: int(k) for k, v in dtype.items()}
