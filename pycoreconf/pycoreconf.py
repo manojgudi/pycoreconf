@@ -197,6 +197,14 @@ class CORECONFModel(ModelSID):
         cc = self.lookupSIDWithoutRecursion(py_dict, path=self.moduleName)
         return cbor.dumps(cc)
 
+    def toCORECONFFromJSON(self, jsonMessage):
+        """
+        Just like toCORECONF, but accepts json in python dictionary to convert to cbor format
+        """
+        cc = self.lookupSIDWithoutRecursion(jsonMessage, path=self.moduleName)
+        return cbor.dumps(cc)
+
+
     def lookupIdentifier(self, obj, delta=0, path="/"):
         """
         Look up leaf identifier for *obj* SID value. 
